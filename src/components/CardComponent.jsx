@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, useMemo } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -18,6 +18,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const CardComponent = ({
   img,
@@ -26,8 +27,9 @@ const CardComponent = ({
   description,
   id,
   isFavorite,
-  canEdit,
   cardsArr,
+  tokenId,
+  userId,
 }) => {
   const [isFav, setIsFav] = useState(isFavorite(id));
   const [myCardsArr, setCardsArr] = useState(cardsArr);
@@ -35,9 +37,19 @@ const CardComponent = ({
     const storedFavorites = JSON.parse(localStorage.getItem("favorites"));
     return storedFavorites ? storedFavorites : [];
   });
+  const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
   const isCardFav = isFavorite(id);
   const navigate = useNavigate();
 
+  const bizAdminCardLayout = () => {
+    if (userId === tokenId) {
+      console.log("my card");
+      return true;
+    } else {
+      console.log("not my card");
+      return false;
+    }
+  };
   const handleDeleteBtnClick = async (id) => {
     try {
       await axios.delete("/cards/" + id); // /cards/:id
@@ -54,8 +66,8 @@ const CardComponent = ({
   const handleFavoriteBtnClick = () => {
     if (!isCardFav) {
       setIsFav(true);
-      console.log(cardsArr.allCards);
-      const newFavoriteCard = cardsArr.allCards.find((card) => card._id === id);
+      console.log(cardsArr);
+      const newFavoriteCard = cardsArr.find((card) => card._id === id);
       const updatedFavoriteCardsArr = [...favoriteCardsArr, newFavoriteCard];
       setFavoriteCardsArr(updatedFavoriteCardsArr);
     } else {
@@ -67,6 +79,7 @@ const CardComponent = ({
     }
   };
   useEffect(() => {
+    bizAdminCardLayout();
     localStorage.setItem("favorites", JSON.stringify(favoriteCardsArr));
   }, [favoriteCardsArr]);
 
@@ -109,21 +122,21 @@ const CardComponent = ({
           </Tooltip>
         )}
 
-        {canEdit ? (
+        {isAdmin && (
+          <Tooltip title="Delete">
+            <IconButton onClick={handleDeleteBtnClick}>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        )}
+        {bizAdminCardLayout() && (
           <Fragment>
-            <Tooltip title="Delete">
-              <IconButton onClick={handleDeleteBtnClick}>
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
             <Tooltip title="Edit">
               <IconButton onClick={handleEditBtnClick}>
                 <EditIcon />
               </IconButton>
             </Tooltip>
           </Fragment>
-        ) : (
-          ""
         )}
       </CardActions>
     </Card>

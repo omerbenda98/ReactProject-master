@@ -5,6 +5,7 @@ import CardComponent from "../components/CardComponent";
 import { toast } from "react-toastify";
 import useQueryParams from "../hooks/useQueryParams";
 import { useSelector } from "react-redux";
+import jwt_decode from "jwt-decode";
 
 const HomePage = (allCards) => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
@@ -30,6 +31,16 @@ const HomePage = (allCards) => {
         toast.error("Oops");
       });
   }, []);
+  const getTokenId = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return false;
+    }
+    const payload = jwt_decode(token);
+    const userId = payload._id;
+    return userId;
+  };
+
   const filterFunc = (data) => {
     if (!originalCardsArr && !data) {
       return;
@@ -81,6 +92,8 @@ const HomePage = (allCards) => {
               canEdit={isBiz || isAdmin}
               isFavorite={isFavorite}
               cardsArr={cardsArr}
+              userId={item.user_id}
+              tokenId={getTokenId()}
             />
           </Grid>
         ))}

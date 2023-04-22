@@ -6,6 +6,8 @@ import CardComponent from "../components/CardComponent";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
+import { useSelector } from "react-redux";
+import jwt_decode from "jwt-decode";
 //need to change favorite. does not update local storage.
 const MyCardsPage = (allCards) => {
   // const [myCardsArr, setmyCardsArr] = useState(allCards);
@@ -14,14 +16,7 @@ const MyCardsPage = (allCards) => {
     const storedFavorites = JSON.parse(localStorage.getItem("favorites"));
     return storedFavorites ? storedFavorites : [];
   });
-
-  // const handleFavoriteDeleteBtnClick = (id) => {
-  //   const updatedFavoriteCardsArr = favoriteCardsArr.filter(
-  //     (card) => card._id !== id
-  //   );
-  //   setFavoriteCardsArr(updatedFavoriteCardsArr);
-  //   localStorage.setItem("favorites", JSON.stringify(updatedFavoriteCardsArr));
-  // };
+  const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
 
   useEffect(() => {
     (async () => {
@@ -33,6 +28,17 @@ const MyCardsPage = (allCards) => {
       }
     })();
   }, []);
+  const getTokenId = () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      return false;
+    }
+    const payload = jwt_decode(token);
+    const userId = payload._id;
+    return userId;
+  };
+
   const isFavorite = (id) => {
     const isCardFav = favoriteCardsArr.some((card) => card._id === id);
 
@@ -58,7 +64,9 @@ const MyCardsPage = (allCards) => {
                 img={item.image ? item.image.url : ""}
                 isFavorite={isFavorite}
                 cardsArr={allCards}
-                canEdit={true}
+                isAdmin={isAdmin}
+                userId={item.user_id}
+                tokenId={getTokenId()}
               />
             </Grid>
           ))}

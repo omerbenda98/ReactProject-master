@@ -2,12 +2,13 @@ import { Box, Grid } from "@mui/material";
 import CardComponent from "../components/CardComponent";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import jwt_decode from "jwt-decode";
 
 const FavCardsPage = () => {
   const [favoriteCardsArr, setFavoriteCardsArr] = useState(
     JSON.parse(localStorage.getItem("favorites"))
   );
-  const isBiz = useSelector((bigPie) => bigPie.authSlice.isBiz);
+  const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
   const handleFavoriteDeleteBtnClick = (id) => {
     const updatedFavoriteCardsArr = favoriteCardsArr.filter(
       (card) => card._id !== id
@@ -19,6 +20,16 @@ const FavCardsPage = () => {
     const isCardFav = favoriteCardsArr.some((card) => card._id === id);
 
     return isCardFav;
+  };
+  const getTokenId = () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      return false;
+    }
+    const payload = jwt_decode(token);
+    const userId = payload._id;
+    return userId;
   };
 
   return (
@@ -34,7 +45,9 @@ const FavCardsPage = () => {
               img={item.image ? item.image.url : ""}
               isFavorite={isFavorite}
               onFavoriteDelete={handleFavoriteDeleteBtnClick}
-              canEdit={isBiz}
+              isAdmin={isAdmin}
+              userId={item.user_id}
+              tokenId={getTokenId()}
             />
           </Grid>
         ))}

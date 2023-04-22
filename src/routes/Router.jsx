@@ -57,16 +57,7 @@ const Router = () => {
           />
         }
       />
-      <Route
-        path={ROUTES.CREATE}
-        element={
-          <SuperProtectedRoute
-            isAdmin={false}
-            isBiz={true}
-            element={<CreateCardPage />}
-          />
-        }
-      />
+      <Route path={ROUTES.CREATE} element={<CreateCardPage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route
         path={ROUTES.LOGOUT}
