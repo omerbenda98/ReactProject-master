@@ -1,20 +1,34 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { nameActions } from "../store/TK";
+import { counterActions } from "../store/counter";
 
 const RP1 = () => {
+  const [txt, setTxt] = useState("");
   const dispatch = useDispatch();
-  const changeName = () => {
-    dispatch(nameActions.stamAction());
+  const handleAdd1 = () => {
+    dispatch(counterActions.add1());
+  };
+
+  const handleSub1 = () => {
+    dispatch(counterActions.remove1());
+  };
+
+  const handleInputChange = (e) => {
+    setTxt(e.target.value);
+  };
+
+  const handleAddClick = () => {
+    dispatch(counterActions.addNumber(txt));
   };
 
   return (
     <Fragment>
-      <button onClick={changeName}>change name</button>
-
-      <Link to="/rp2">to rp2</Link>
+      <button onClick={handleAdd1}>+1</button>
+      <button onClick={handleSub1}>-1</button>
+      <input type="text" value={txt} onChange={handleInputChange} />
+      <button onClick={handleAddClick}>add</button>
     </Fragment>
   );
 };

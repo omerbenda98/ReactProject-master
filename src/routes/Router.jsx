@@ -13,6 +13,8 @@ import MyCardsPage from "../pages/MyCardsPage";
 import FavCardsPage from "../pages/FavCardsPage";
 import SandboxPage from "../pages/SandboxPage";
 import CreateCardPage from "../pages/CreateCardPage";
+import RP1 from "../pages/RP1";
+import RP2 from "../pages/RP2";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -56,7 +58,10 @@ const Router = () => {
             element={<SandboxPage />}
           />
         }
-      />
+      >
+        <Route path={`${ROUTES.SANDBOX}/RP1`} element={<RP1 />} />
+        <Route path={`${ROUTES.SANDBOX}/RP2`} element={<RP2 />} />
+      </Route>
       <Route path={ROUTES.CREATE} element={<CreateCardPage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route

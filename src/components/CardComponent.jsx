@@ -43,10 +43,8 @@ const CardComponent = ({
 
   const bizAdminCardLayout = () => {
     if (userId === tokenId) {
-      console.log("my card");
       return true;
     } else {
-      console.log("not my card");
       return false;
     }
   };

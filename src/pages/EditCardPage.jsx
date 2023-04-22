@@ -32,10 +32,20 @@ const EditCardPage = () => {
   */
   const [inputState, setInputState] = useState(null);
   // const [inputState, setInputState] = useState({
-  //   img: "",
   //   title: "",
-  //   price: "",
+  //   subTitle: "",
   //   description: "",
+  //   state: "",
+  //   country: "",
+  //   city: "",
+  //   street: "",
+  //   houseNumber: "",
+  //   zipCode: "",
+  //   phone: "",
+  //   email: "",
+  //   web: "",
+  //   url: "",
+  //   alt: "",
   // });
   const [inputsErrorsState, setInputsErrorsState] = useState({});
   const navigate = useNavigate();
@@ -56,6 +66,7 @@ const EditCardPage = () => {
           return;
         }
         const { data } = await axios.get("/cards/card/" + id);
+        console.log();
         let newInputState = {
           ...data,
         };
@@ -69,12 +80,14 @@ const EditCardPage = () => {
         } else {
           newInputState.alt = "";
         }
+
         delete newInputState.image;
         delete newInputState.likes;
+        delete newInputState.__v;
         delete newInputState._id;
+        delete newInputState.createdAt;
         delete newInputState.user_id;
         delete newInputState.bizNumber;
-        delete newInputState.createdAt;
         setInputState(newInputState);
       } catch (err) {
         console.log("error from axios", err);
@@ -84,6 +97,7 @@ const EditCardPage = () => {
   const handleSaveBtnClick = async (ev) => {
     try {
       const joiResponse = validateEditSchema(inputState);
+      console.log(inputState);
       setInputsErrorsState(joiResponse);
       console.log(joiResponse);
       if (!joiResponse) {
@@ -142,24 +156,6 @@ const EditCardPage = () => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                fullWidth
-                id="url"
-                label="Url"
-                name="url"
-                autoComplete="url"
-                value={inputState.url ? inputState.url : ""}
-                onChange={handleInputChange}
-              />
-              {inputsErrorsState && inputsErrorsState.url && (
-                <Alert severity="warning">
-                  {inputsErrorsState.url.map((item) => (
-                    <div key={"url-errors" + item}>{item}</div>
-                  ))}
-                </Alert>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
                 required
                 fullWidth
                 id="title"
@@ -216,21 +212,111 @@ const EditCardPage = () => {
                 </Alert>
               )}
             </Grid>
+
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
-                name="address"
-                label="Address"
-                id="address"
-                autoComplete="address"
-                value={inputState.address}
+                id="state"
+                label="State"
+                name="state"
+                autoComplete="state"
+                value={inputState.state ? inputState.state : ""}
                 onChange={handleInputChange}
               />
-              {inputsErrorsState && inputsErrorsState.description && (
+              {inputsErrorsState && inputsErrorsState.state && (
                 <Alert severity="warning">
-                  {inputsErrorsState.description.map((item) => (
-                    <div key={"description-errors" + item}>{item}</div>
+                  {inputsErrorsState.state.map((item) => (
+                    <div key={"state-errors" + item}>{item}</div>
+                  ))}
+                </Alert>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                id="country"
+                label="Country"
+                name="country"
+                autoComplete="country"
+                value={inputState.country ? inputState.country : ""}
+                onChange={handleInputChange}
+              />
+              {inputsErrorsState && inputsErrorsState.country && (
+                <Alert severity="warning">
+                  {inputsErrorsState.country.map((item) => (
+                    <div key={"country-errors" + item}>{item}</div>
+                  ))}
+                </Alert>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                id="city"
+                label="City"
+                name="city"
+                autoComplete="city"
+                value={inputState.city ? inputState.city : ""}
+                onChange={handleInputChange}
+              />
+              {inputsErrorsState && inputsErrorsState.city && (
+                <Alert severity="warning">
+                  {inputsErrorsState.city.map((item) => (
+                    <div key={"city-errors" + item}>{item}</div>
+                  ))}
+                </Alert>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                id="street"
+                label="Street"
+                name="street"
+                autoComplete="street"
+                value={inputState.street ? inputState.street : ""}
+                onChange={handleInputChange}
+              />
+              {inputsErrorsState && inputsErrorsState.street && (
+                <Alert severity="warning">
+                  {inputsErrorsState.street.map((item) => (
+                    <div key={"street-errors" + item}>{item}</div>
+                  ))}
+                </Alert>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                id="houseNumber"
+                label="HouseNumber"
+                name="houseNumber"
+                autoComplete="houseNumber"
+                value={inputState.houseNumber ? inputState.houseNumber : ""}
+                onChange={handleInputChange}
+              />
+              {inputsErrorsState && inputsErrorsState.houseNumber && (
+                <Alert severity="warning">
+                  {inputsErrorsState.houseNumber.map((item) => (
+                    <div key={"houseNumber-errors" + item}>{item}</div>
+                  ))}
+                </Alert>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                id="zipCode"
+                label="ZipCode"
+                name="zipCode"
+                autoComplete="zipCode"
+                value={inputState.zipCode ? inputState.zipCode : ""}
+                onChange={handleInputChange}
+              />
+              {inputsErrorsState && inputsErrorsState.zipCode && (
+                <Alert severity="warning">
+                  {inputsErrorsState.zipCode.map((item) => (
+                    <div key={"zipCode-errors" + item}>{item}</div>
                   ))}
                 </Alert>
               )}
@@ -246,14 +332,90 @@ const EditCardPage = () => {
                 value={inputState.phone}
                 onChange={handleInputChange}
               />
-              {inputsErrorsState && inputsErrorsState.description && (
+              {inputsErrorsState && inputsErrorsState.phone && (
                 <Alert severity="warning">
-                  {inputsErrorsState.description.map((item) => (
-                    <div key={"description-errors" + item}>{item}</div>
+                  {inputsErrorsState.phone.map((item) => (
+                    <div key={"phone-errors" + item}>{item}</div>
                   ))}
                 </Alert>
               )}
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="email"
+                label="Email"
+                id="email"
+                autoComplete="email"
+                value={inputState.email}
+                onChange={handleInputChange}
+              />
+              {inputsErrorsState && inputsErrorsState.email && (
+                <Alert severity="warning">
+                  {inputsErrorsState.email.map((item) => (
+                    <div key={"email-errors" + item}>{item}</div>
+                  ))}
+                </Alert>
+              )}
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="web"
+                label="Web"
+                id="web"
+                autoComplete="web"
+                value={inputState.web}
+                onChange={handleInputChange}
+              />
+              {inputsErrorsState && inputsErrorsState.web && (
+                <Alert severity="warning">
+                  {inputsErrorsState.web.map((item) => (
+                    <div key={"web-errors" + item}>{item}</div>
+                  ))}
+                </Alert>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                id="url"
+                label="Url"
+                name="url"
+                autoComplete="url"
+                value={inputState.url ? inputState.url : ""}
+                onChange={handleInputChange}
+              />
+              {inputsErrorsState && inputsErrorsState.url && (
+                <Alert severity="warning">
+                  {inputsErrorsState.url.map((item) => (
+                    <div key={"url-errors" + item}>{item}</div>
+                  ))}
+                </Alert>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                id="alt"
+                label="Alt"
+                name="alt"
+                autoComplete="alt"
+                value={inputState.alt ? inputState.alt : ""}
+                onChange={handleInputChange}
+              />
+              {inputsErrorsState && inputsErrorsState.alt && (
+                <Alert severity="warning">
+                  {inputsErrorsState.alt.map((item) => (
+                    <div key={"alt-errors" + item}>{item}</div>
+                  ))}
+                </Alert>
+              )}
+            </Grid>
+
             <Grid item xs={6}>
               <Button
                 fullWidth
@@ -275,25 +437,6 @@ const EditCardPage = () => {
               </Button>
             </Grid>
           </Grid>
-          {/* <Button
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={() => {
-              navigate("/edit/2");
-            }}
-          >
-            edit 2
-          </Button> */}
-          {/* <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link to={ROUTES.REGISTER}>
-                <Typography variant="body2">
-                  Did not have an account? Sign up
-                </Typography>
-              </Link>
-            </Grid>
-          </Grid> */}
         </Box>
       </Box>
     </Container>
