@@ -21,20 +21,20 @@ import axios from "axios";
 //element={<ProtectedRoute element={<LogoutPage />} />}
 
 const Router = () => {
-  const [allCards, setAllCards] = useState([]);
-  useEffect(() => {
-    axios
-      .get("/cards/cards")
-      .then((response) => {
-        setAllCards(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  // const [allCards, setAllCards] = useState([]);
+  // useEffect(() => {
+  //   axios
+  //     .get("/cards/cards")
+  //     .then((response) => {
+  //       setAllCards(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
   return (
     <Routes>
-      <Route path={ROUTES.HOME} element={<HomePage allCards={allCards} />} />
+      <Route path={ROUTES.HOME} element={<HomePage />} />
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
       <Route path={ROUTES.FAKEHOME} element={<Navigate to={ROUTES.HOME} />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
@@ -44,7 +44,7 @@ const Router = () => {
           <SuperProtectedRoute
             isAdmin={true}
             isBiz={true}
-            element={<MyCardsPage allCards={allCards} />}
+            element={<MyCardsPage />}
           />
         }
       />

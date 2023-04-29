@@ -19,6 +19,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const CardComponent = ({
   img,
@@ -26,19 +27,16 @@ const CardComponent = ({
   subTitle,
   description,
   id,
-  isFavorite,
   cardsArr,
   tokenId,
   userId,
+  onFavoriteDelete,
 }) => {
-  const [isFav, setIsFav] = useState(isFavorite(id));
+  const [isFav, setIsFav] = useState(false);
   const [myCardsArr, setCardsArr] = useState(cardsArr);
-  const [favoriteCardsArr, setFavoriteCardsArr] = useState(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem("favorites"));
-    return storedFavorites ? storedFavorites : [];
-  });
+
   const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
-  const isCardFav = isFavorite(id);
+  // const isCardFav = isFavorite(id);
   const navigate = useNavigate();
 
   const bizAdminCardLayout = () => {
@@ -48,9 +46,22 @@ const CardComponent = ({
       return false;
     }
   };
+  const isFavorite = () => {
+    const currentCard = cardsArr.find((card) => card._id === id);
+    if (
+      currentCard &&
+      currentCard.likes &&
+      currentCard.likes.filter((item) => item === tokenId).length > 0
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   const handleDeleteBtnClick = async (id) => {
     try {
       await axios.delete("/cards/" + id); // /cards/:id
+
       setCardsArr((newCardsArr) =>
         newCardsArr.filter((item) => item._id !== id)
       );
@@ -61,25 +72,41 @@ const CardComponent = ({
   const handleEditBtnClick = () => {
     navigate(`/edit/${id}`); //localhost:3000/edit/123213
   };
-  const handleFavoriteBtnClick = () => {
-    if (!isCardFav) {
-      setIsFav(true);
-      console.log(cardsArr);
+  const handleFavoriteBtnClick = async () => {
+    setIsFav(true);
+    try {
       const newFavoriteCard = cardsArr.find((card) => card._id === id);
-      const updatedFavoriteCardsArr = [...favoriteCardsArr, newFavoriteCard];
-      setFavoriteCardsArr(updatedFavoriteCardsArr);
-    } else {
-      setIsFav(false);
-      const updatedFavoriteCardsArr = favoriteCardsArr.filter(
-        (card) => card._id !== id
-      );
-      setFavoriteCardsArr(updatedFavoriteCardsArr);
+      const updatedLikes = [...newFavoriteCard.likes, userId];
+      await axios.patch(`cards/card-like/${id}`, { likes: updatedLikes });
+      toast.success("Card added to favorites");
+    } catch (error) {
+      console.error("Failed to update card likes", error);
+      toast.error("Error, can not add card");
     }
   };
+  const handleFavoriteDeleteBtnClick = async () => {
+    setIsFav(false);
+    onFavoriteDelete(id);
+    try {
+      const newFavoriteCard = cardsArr.find((card) => card._id === id);
+      const updatedLikes = newFavoriteCard.likes.filter(
+        (like) => like !== userId
+      );
+      await axios.patch(`cards/card-like/${id}`, { likes: updatedLikes });
+      toast.success("Card removed from favorites");
+    } catch (error) {
+      console.error("Failed to update card likes", error);
+      toast.error("Error, can not remove card");
+    }
+  };
+  // const isFavorite = (id) => {
+  //   const isCardFav = cardsArr.some((card) => card._id === id);
+  //   return isCardFav;
+  // };
+
   useEffect(() => {
-    bizAdminCardLayout();
-    localStorage.setItem("favorites", JSON.stringify(favoriteCardsArr));
-  }, [favoriteCardsArr]);
+    setIsFav(isFavorite());
+  }, []);
 
   // try {
   //   const response = await axios.patch(`cards/card-like/${id}`, {
@@ -108,7 +135,7 @@ const CardComponent = ({
         </Tooltip>
         {isFav ? (
           <Tooltip title="FavoriteSelected">
-            <IconButton onClick={handleFavoriteBtnClick}>
+            <IconButton onClick={handleFavoriteDeleteBtnClick}>
               <FavoriteIcon />
             </IconButton>
           </Tooltip>

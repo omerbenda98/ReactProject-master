@@ -8,16 +8,22 @@ import axios from "axios";
 import { CircularProgress } from "@mui/material";
 import { useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
-//need to change favorite. does not update local storage.
-const MyCardsPage = (allCards) => {
-  // const [myCardsArr, setmyCardsArr] = useState(allCards);
-  const [userData, setUserData] = useState(null);
-  const [favoriteCardsArr, setFavoriteCardsArr] = useState(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem("favorites"));
-    return storedFavorites ? storedFavorites : [];
-  });
-  const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
 
+const MyCardsPage = () => {
+  const [userData, setUserData] = useState(null);
+  const [cardsArr, setCardsArr] = useState([]);
+
+  const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
+  useEffect(() => {
+    axios
+      .get("/cards/cards")
+      .then(({ data }) => {
+        setCardsArr(data);
+      })
+      .catch((err) => {
+        console.log("err from axios", err);
+      });
+  }, []);
   useEffect(() => {
     (async () => {
       try {
@@ -39,12 +45,6 @@ const MyCardsPage = (allCards) => {
     return userId;
   };
 
-  const isFavorite = (id) => {
-    const isCardFav = favoriteCardsArr.some((card) => card._id === id);
-
-    return isCardFav;
-  };
-
   if (!userData) {
     return <CircularProgress />;
   }
@@ -62,8 +62,7 @@ const MyCardsPage = (allCards) => {
                 subTitle={item.subTitle}
                 description={item.description}
                 img={item.image ? item.image.url : ""}
-                isFavorite={isFavorite}
-                cardsArr={allCards}
+                cardsArr={cardsArr}
                 isAdmin={isAdmin}
                 userId={item.user_id}
                 tokenId={getTokenId()}
@@ -85,9 +84,3 @@ const MyCardsPage = (allCards) => {
   );
 };
 export default MyCardsPage;
-/*
-    TODO:
-    1) use user id to colect created cards into a state
- 2)use map to create a new display of cards
- 3)make button to lead to createCardPage
-*/

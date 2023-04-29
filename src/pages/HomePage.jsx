@@ -7,13 +7,8 @@ import useQueryParams from "../hooks/useQueryParams";
 import { useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
 
-const HomePage = (allCards) => {
+const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
-  const [favoriteCardsArr, setFavoriteCardsArr] = useState(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem("favorites"));
-    return storedFavorites ? storedFavorites : [];
-  });
-
   const [cardsArr, setCardsArr] = useState(null);
 
   let qparams = useQueryParams();
@@ -65,15 +60,6 @@ const HomePage = (allCards) => {
     filterFunc();
   }, [qparams.filter]);
 
-  const isFavorite = (id) => {
-    const isCardFav = favoriteCardsArr.some((card) => card._id === id);
-    return isCardFav;
-  };
-
-  useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favoriteCardsArr));
-  }, [favoriteCardsArr]);
-
   if (!cardsArr) {
     return <CircularProgress />;
   }
@@ -90,7 +76,6 @@ const HomePage = (allCards) => {
               description={item.description}
               img={item.image ? item.image.url : ""}
               canEdit={isBiz || isAdmin}
-              isFavorite={isFavorite}
               cardsArr={cardsArr}
               userId={item.user_id}
               tokenId={getTokenId()}

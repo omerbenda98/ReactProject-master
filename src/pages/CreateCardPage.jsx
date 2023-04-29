@@ -52,7 +52,6 @@ const CreateCardPage = () => {
     try {
       const joiResponse = validateCreateSchema(inputState);
       setInputsErrorsState(joiResponse);
-      console.log(joiResponse);
       if (!joiResponse) {
         await axios.post("/cards", inputState);
         navigate(ROUTES.HOME);
