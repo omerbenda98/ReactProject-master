@@ -72,6 +72,9 @@ const CardComponent = ({
   const handleEditBtnClick = () => {
     navigate(`/edit/${id}`); //localhost:3000/edit/123213
   };
+  const handleMoreInfoClick = () => {
+    navigate(`/moreInfo/${id}`);
+  };
   const handleFavoriteBtnClick = async () => {
     setIsFav(true);
     try {
@@ -128,19 +131,19 @@ const CardComponent = ({
         <Typography>{description}</Typography>
       </CardContent>
       <CardActions>
-        <Tooltip title="Phone">
-          <IconButton>
+        <Tooltip title="Contact">
+          <IconButton onClick={handleMoreInfoClick}>
             <PhoneIcon />
           </IconButton>
         </Tooltip>
         {isFav ? (
-          <Tooltip title="FavoriteSelected">
+          <Tooltip title="Remove From Favorites">
             <IconButton onClick={handleFavoriteDeleteBtnClick}>
               <FavoriteIcon />
             </IconButton>
           </Tooltip>
         ) : (
-          <Tooltip title="Favorite">
+          <Tooltip title="Add Favorite">
             <IconButton onClick={handleFavoriteBtnClick}>
               <FavoriteBorderIcon />
             </IconButton>

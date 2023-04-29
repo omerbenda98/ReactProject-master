@@ -6,11 +6,13 @@ import { toast } from "react-toastify";
 import useQueryParams from "../hooks/useQueryParams";
 import { useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
+import Typography from "@mui/material/Typography";
+import MoreInfoPage from "./MoreInfoPage";
 
 const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
-
+  const [selectedCard, setSelectedCard] = useState(null);
   let qparams = useQueryParams();
   const isBiz = useSelector((bigPie) => bigPie.authSlice.isBiz);
   const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
@@ -66,6 +68,15 @@ const HomePage = () => {
 
   return (
     <Box>
+      <Box sx={{ textAlign: "center", mt: 3 }}>
+        <Typography variant="h2" component="h1" sx={{ fontWeight: "bold" }}>
+          Welcome to MyApp!
+        </Typography>
+        <Typography variant="h5" component="h2" sx={{ mt: 2, mb: 2 }}>
+          Explore and discover amazing content.
+        </Typography>
+      </Box>
+
       <Grid container spacing={2}>
         {cardsArr.map((item) => (
           <Grid item xs={4} key={item._id + Date.now()}>
@@ -79,9 +90,28 @@ const HomePage = () => {
               cardsArr={cardsArr}
               userId={item.user_id}
               tokenId={getTokenId()}
+              onClick={() => setSelectedCard(item)}
             />
           </Grid>
         ))}
+        {selectedCard && (
+          <MoreInfoPage
+            title={selectedCard.title}
+            subTitle={selectedCard.subTitle}
+            description={selectedCard.description}
+            state={selectedCard.state}
+            country={selectedCard.country}
+            city={selectedCard.city}
+            street={selectedCard.street}
+            houseNumber={selectedCard.houseNumber}
+            zipCode={selectedCard.zipCode}
+            phone={selectedCard.phone}
+            email={selectedCard.email}
+            web={selectedCard.web}
+            url={selectedCard.url}
+            alt={selectedCard.alt}
+          />
+        )}
       </Grid>
     </Box>
   );

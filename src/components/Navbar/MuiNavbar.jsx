@@ -14,10 +14,9 @@ import DiamondIcon from "@mui/icons-material/Diamond";
 import Link from "@mui/icons-material/Link";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Switch } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
-
 import SearchPartial from "./SearchPartial";
 import ROUTES from "../../routes/ROUTES";
 import { darkThemeActions } from "../../store/darkTheme";
@@ -86,7 +85,7 @@ const MuiNavbar = () => {
   const isBiz = useSelector((bigState) => bigState.authSlice.isBiz);
   console.log("biz = " + isBiz);
   console.log("admin = " + isAdmin);
-
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const dispatch = useDispatch();
   // dispatch(authActions.isAdmin());
@@ -111,11 +110,16 @@ const MuiNavbar = () => {
     dispatch(authActions.logout());
   };
 
+  const handleHomeIconClick = () => {
+    navigate(ROUTES.HOME);
+  };
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar>
-          <DiamondIcon />
+          <IconButton onClick={handleHomeIconClick}>
+            <DiamondIcon />
+          </IconButton>
           <Typography
             variant="h6"
             noWrap
