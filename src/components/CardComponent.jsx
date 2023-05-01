@@ -150,7 +150,7 @@ const CardComponent = ({
           </Tooltip>
         )}
 
-        {isAdmin && (
+        {(bizAdminCardLayout() || isAdmin) && (
           <Tooltip title="Delete">
             <IconButton onClick={handleDeleteBtnClick}>
               <DeleteIcon />

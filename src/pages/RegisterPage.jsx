@@ -37,6 +37,9 @@ const RegisterPage = () => {
     biz: false,
   });
   const [inputsErrorsState, setInputsErrorsState] = useState({});
+  const [disableSubmit, setDisableSubmit] = useState(false);
+  const isSubmitDisabled = Object.keys(inputsErrorsState).length > 0;
+  console.log(isSubmitDisabled);
   const navigate = useNavigate();
   const handleBtnClick = async (ev) => {
     try {
@@ -382,6 +385,7 @@ const RegisterPage = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             onClick={handleBtnClick}
+            disabled={isSubmitDisabled}
           >
             Sign Up
           </Button>

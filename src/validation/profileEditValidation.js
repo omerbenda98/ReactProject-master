@@ -2,7 +2,7 @@ import Joi from "joi";
 
 import validation from "./validation";
 
-const registerSchema = Joi.object({
+const profileSchema = Joi.object({
   firstName: Joi.string().min(2).max(256).required(),
   middleName: Joi.string().min(2).max(256).allow(""),
   lastName: Joi.string().min(2).max(256).required(),
@@ -12,7 +12,6 @@ const registerSchema = Joi.object({
     .max(256)
     .required()
     .email({ tlds: { allow: false } }),
-  password: Joi.string().min(6).max(1024).required(),
   imageUrl: Joi.string().min(6).max(1024).allow(""),
   imageAlt: Joi.string().min(6).max(256).allow(""),
   state: Joi.string().min(2).max(256).allow(""),
@@ -24,7 +23,7 @@ const registerSchema = Joi.object({
   biz: Joi.boolean(),
 });
 
-const validateRegisterSchema = (userInput) =>
-  validation(registerSchema, userInput);
+const validateProfileSchema = (userInput) =>
+  validation(profileSchema, userInput);
 
-export default validateRegisterSchema;
+export default validateProfileSchema;
