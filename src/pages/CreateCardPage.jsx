@@ -19,15 +19,7 @@ import { toast } from "react-toastify";
 import validateCreateSchema from "../validation/createValidation";
 
 const CreateCardPage = () => {
-  /*
-    router: /edit/:id
-    url: /edit/magafaiim
-    params = {
-      id: "magafaiim"
-    }
-    const params = useParams()
-    const id = params.id
-  */
+  const [isDisabled, setIsDisabled] = useState(true);
   const [inputState, setInputState] = useState({
     title: "",
     subTitle: "",
@@ -70,8 +62,35 @@ const CreateCardPage = () => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState[ev.target.id] = ev.target.value;
     setInputState(newInputState);
-  };
+    const joiResponse = validateCreateSchema(newInputState);
+    if (!joiResponse) {
+      setIsDisabled(false);
+      setInputsErrorsState(null);
+    } else {
+      setInputsErrorsState(joiResponse);
 
+      setIsDisabled(true);
+    }
+  };
+  const handleResetClick = (ev) => {
+    setInputState({
+      title: "",
+      subTitle: "",
+      description: "",
+      state: "",
+      country: "",
+      city: "",
+      street: "",
+      houseNumber: "",
+      zipCode: "",
+      phone: "",
+      email: "",
+      web: "",
+      url: "",
+      alt: "",
+    });
+    setInputsErrorsState(null);
+  };
   if (!inputState) {
     return <CircularProgress />;
   }
@@ -313,7 +332,6 @@ const CreateCardPage = () => {
 
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
                 name="web"
                 label="Web"
@@ -373,8 +391,19 @@ const CreateCardPage = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 onClick={handleSaveBtnClick}
+                disabled={isDisabled}
               >
                 Save
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={handleResetClick}
+              >
+                reset
               </Button>
             </Grid>
             <Grid item xs={6}>

@@ -27,7 +27,7 @@ const LoginPage = () => {
   const isAdmin = useAdmin();
   const isBiz = useBiz();
   const navigate = useNavigate();
-
+  const [isDisabled, setIsDisabled] = useState(true);
   const handleBtnClick = async (ev) => {
     try {
       const joiResponse = validateLoginSchema(inputState);
@@ -50,6 +50,21 @@ const LoginPage = () => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState[ev.target.id] = ev.target.value;
     setInputState(newInputState);
+    const joiResponse = validateLoginSchema(newInputState);
+    if (!joiResponse) {
+      setIsDisabled(false);
+      setInputsErrorsState(null);
+    } else {
+      setInputsErrorsState(joiResponse);
+      setIsDisabled(true);
+    }
+  };
+  const handleResetClick = (ev) => {
+    setInputState({
+      email: "",
+      password: "",
+    });
+    setInputsErrorsState(null);
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -114,8 +129,17 @@ const LoginPage = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             onClick={handleBtnClick}
+            disabled={isDisabled}
           >
             Sign In
+          </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={handleResetClick}
+          >
+            reset
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>

@@ -20,7 +20,6 @@ const authSlice = createSlice({
       state.payload = action.payload;
     },
     logout(state) {
-      console.log("logout");
       state.isLoggedIn = false;
       state.isAdmin = false;
       state.isBiz = false;

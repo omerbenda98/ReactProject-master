@@ -21,6 +21,7 @@ const ProfilePage = () => {
   const [inputState, setInputState] = useState({});
   const [originalInputState, setOriginalInputState] = useState({});
   const [inputsErrorsState, setInputsErrorsState] = useState({});
+  const [isDisabled, setIsDisabled] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const navigate = useNavigate();
 
@@ -71,6 +72,14 @@ const ProfilePage = () => {
     let newInputState = { ...inputState };
     newInputState[ev.target.id] = ev.target.value;
     setInputState(newInputState);
+    const joiResponse = validateProfileSchema(newInputState);
+    if (!joiResponse) {
+      setIsDisabled(false);
+      setInputsErrorsState(null);
+    } else {
+      setInputsErrorsState(joiResponse);
+      setIsDisabled(true);
+    }
   };
 
   const handleCheckboxChange = (ev) => {
@@ -79,7 +88,27 @@ const ProfilePage = () => {
       biz: ev.target.checked,
     }));
   };
-
+  const handleResetClick = (ev) => {
+    console.log("here");
+    setInputState({
+      firstName: "",
+      middleName: "",
+      lastName: "",
+      phone: "",
+      email: "",
+      password: "",
+      imageUrl: "",
+      imageAlt: "",
+      state: "",
+      country: "",
+      city: "",
+      street: "",
+      houseNumber: "",
+      zipCode: "",
+      biz: false,
+    });
+    setInputsErrorsState(null);
+  };
   return (
     <Container component="main" maxWidth="xs">
       {editMode ? (
@@ -347,8 +376,17 @@ const ProfilePage = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             onClick={handleSaveProfile}
+            disabled={isDisabled}
           >
             SAVE
+          </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={handleResetClick}
+          >
+            RESET
           </Button>
           <Button
             fullWidth

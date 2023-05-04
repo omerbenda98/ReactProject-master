@@ -12,11 +12,13 @@ import MoreInfoPage from "./MoreInfoPage";
 const HomePage = () => {
   const [originalCardsArr, setOriginalCardsArr] = useState(null);
   const [cardsArr, setCardsArr] = useState(null);
+
   const [selectedCard, setSelectedCard] = useState(null);
   let qparams = useQueryParams();
   const isBiz = useSelector((bigPie) => bigPie.authSlice.isBiz);
   const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
-
+  console.log(isBiz);
+  console.log(isAdmin);
   useEffect(() => {
     axios
       .get("/cards/cards")

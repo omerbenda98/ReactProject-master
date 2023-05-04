@@ -83,8 +83,7 @@ const MuiNavbar = () => {
   const isLoggedIn = useSelector((bigState) => bigState.authSlice.isLoggedIn);
   const isAdmin = useSelector((bigState) => bigState.authSlice.isAdmin);
   const isBiz = useSelector((bigState) => bigState.authSlice.isBiz);
-  console.log("biz = " + isBiz);
-  console.log("admin = " + isAdmin);
+
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const dispatch = useDispatch();

@@ -14,6 +14,9 @@ const MyCardsPage = () => {
   const [cardsArr, setCardsArr] = useState([]);
 
   const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
+  const isBiz = useSelector((bigPie) => bigPie.authSlice.isBiz);
+  console.log(isAdmin);
+  console.log(isBiz);
   useEffect(() => {
     axios
       .get("/cards/cards")
@@ -44,7 +47,9 @@ const MyCardsPage = () => {
     const userId = payload._id;
     return userId;
   };
-
+  if (!isAdmin || !isBiz) {
+    return <CircularProgress />;
+  }
   if (!userData) {
     return <CircularProgress />;
   }

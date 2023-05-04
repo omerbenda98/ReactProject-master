@@ -31,6 +31,7 @@ const EditCardPage = () => {
     const id = params.id
   */
   const [inputState, setInputState] = useState(null);
+  const [isDisabled, setIsDisabled] = useState(false);
   // const [inputState, setInputState] = useState({
   //   title: "",
   //   subTitle: "",
@@ -119,8 +120,34 @@ const EditCardPage = () => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState[ev.target.id] = ev.target.value;
     setInputState(newInputState);
+    const joiResponse = validateEditSchema(newInputState);
+    if (!joiResponse) {
+      setIsDisabled(false);
+      setInputsErrorsState(null);
+    } else {
+      setInputsErrorsState(joiResponse);
+      setIsDisabled(true);
+    }
   };
-
+  const handleResetClick = (ev) => {
+    setInputState({
+      title: "",
+      subTitle: "",
+      description: "",
+      state: "",
+      country: "",
+      city: "",
+      street: "",
+      houseNumber: "",
+      zipCode: "",
+      phone: "",
+      email: "",
+      web: "",
+      url: "",
+      alt: "",
+    });
+    setInputsErrorsState(null);
+  };
   if (!inputState) {
     return <CircularProgress />;
   }
@@ -422,6 +449,7 @@ const EditCardPage = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 onClick={handleSaveBtnClick}
+                disabled={isDisabled}
               >
                 Save
               </Button>
@@ -434,6 +462,14 @@ const EditCardPage = () => {
                 onClick={handleCancelBtnClick}
               >
                 Cancel
+              </Button>
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={handleResetClick}
+              >
+                Reset
               </Button>
             </Grid>
           </Grid>

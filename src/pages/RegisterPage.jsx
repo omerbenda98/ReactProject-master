@@ -37,9 +37,8 @@ const RegisterPage = () => {
     biz: false,
   });
   const [inputsErrorsState, setInputsErrorsState] = useState({});
-  const [disableSubmit, setDisableSubmit] = useState(false);
-  const isSubmitDisabled = Object.keys(inputsErrorsState).length > 0;
-  console.log(isSubmitDisabled);
+  const [isDisabled, setIsDisabled] = useState(true);
+
   const navigate = useNavigate();
   const handleBtnClick = async (ev) => {
     try {
@@ -81,12 +80,41 @@ const RegisterPage = () => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState[ev.target.id] = ev.target.value;
     setInputState(newInputState);
+    const joiResponse = validateRegisterSchema(newInputState);
+    if (!joiResponse) {
+      setIsDisabled(false);
+      setInputsErrorsState(null);
+    } else {
+      setInputsErrorsState(joiResponse);
+      setIsDisabled(true);
+    }
   };
   const handleCheckboxChange = (ev) => {
     setInputState((prevState) => ({
       ...prevState,
       biz: ev.target.checked,
     }));
+  };
+  const handleResetClick = (ev) => {
+    console.log("here");
+    setInputState({
+      firstName: "",
+      middleName: "",
+      lastName: "",
+      phone: "",
+      email: "",
+      password: "",
+      imageUrl: "",
+      imageAlt: "",
+      state: "",
+      country: "",
+      city: "",
+      street: "",
+      houseNumber: "",
+      zipCode: "",
+      biz: false,
+    });
+    setInputsErrorsState(null);
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -385,9 +413,17 @@ const RegisterPage = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             onClick={handleBtnClick}
-            disabled={isSubmitDisabled}
+            disabled={isDisabled}
           >
             Sign Up
+          </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={handleResetClick}
+          >
+            reset
           </Button>
           <Button
             fullWidth

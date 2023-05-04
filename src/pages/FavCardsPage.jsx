@@ -4,13 +4,12 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import { Typography } from "@mui/material";
 import { toast } from "react-toastify";
 
 const FavCardsPage = () => {
   const [cardsArr, setCardsArr] = useState([]);
-  const [favoriteCardsArr, setFavoriteCardsArr] = useState(
-    JSON.parse(localStorage.getItem("favorites"))
-  );
+  const [favoriteCardsArr, setFavoriteCardsArr] = useState([]);
   const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
 
   useEffect(() => {
@@ -50,24 +49,30 @@ const FavCardsPage = () => {
 
   return (
     <Box>
-      <Grid container spacing={2}>
-        {favoriteCardsArr.map((item) => (
-          <Grid item xs={4} key={item._id + Date.now()}>
-            <CardComponent
-              id={item._id}
-              title={item.title}
-              subTitle={item.subTitle}
-              description={item.description}
-              img={item.image ? item.image.url : ""}
-              isAdmin={isAdmin}
-              userId={item.user_id}
-              tokenId={getTokenId()}
-              cardsArr={cardsArr}
-              onFavoriteDelete={handleRemoveCard}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      {favoriteCardsArr.length != 0 ? (
+        <Grid container spacing={2}>
+          {favoriteCardsArr.map((item) => (
+            <Grid item xs={4} key={item._id + Date.now()}>
+              <CardComponent
+                id={item._id}
+                title={item.title}
+                subTitle={item.subTitle}
+                description={item.description}
+                img={item.image ? item.image.url : ""}
+                isAdmin={isAdmin}
+                userId={item.user_id}
+                tokenId={getTokenId()}
+                cardsArr={cardsArr}
+                onFavoriteDelete={handleRemoveCard}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Typography variant="h3" align="center">
+          No favorite cards selected.
+        </Typography>
+      )}
     </Box>
   );
 };

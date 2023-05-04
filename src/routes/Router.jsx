@@ -44,7 +44,7 @@ const Router = () => {
         path={ROUTES.MYCARDS}
         element={
           <SuperProtectedRoute
-            isAdmin={true}
+            isAdmin={false}
             isBiz={true}
             element={<MyCardsPage />}
           />

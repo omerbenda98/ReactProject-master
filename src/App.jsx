@@ -31,14 +31,16 @@ const dark = {
 };
 
 function App() {
+  const [biz, setBiz] = useState(null);
+  const [admin, setAdmin] = useState(null);
   const loggedIn = useLoggedIn();
   const isAdmin = useAdmin();
   const isBiz = useBiz();
   // useLoggedIn()();
   useEffect(() => {
     loggedIn();
-    isAdmin();
-    isBiz();
+    setAdmin(isAdmin());
+    setBiz(isBiz());
   }, []);
 
   /*
