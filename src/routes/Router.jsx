@@ -13,6 +13,7 @@ import MyCardsPage from "../pages/MyCardsPage";
 import FavCardsPage from "../pages/FavCardsPage";
 import SandboxPage from "../pages/SandboxPage";
 import CreateCardPage from "../pages/CreateCardPage";
+import CRMpage from "../pages/CRMpage";
 import RP1 from "../pages/RP1";
 import RP2 from "../pages/RP2";
 import { useEffect, useState } from "react";
@@ -64,6 +65,16 @@ const Router = () => {
         <Route path={`${ROUTES.SANDBOX}/RP1`} element={<RP1 />} />
         <Route path={`${ROUTES.SANDBOX}/RP2`} element={<RP2 />} />
       </Route>
+      <Route
+        path={ROUTES.CRM}
+        element={
+          <SuperProtectedRoute
+            isAdmin={true}
+            isBiz={true}
+            element={<CRMpage />}
+          />
+        }
+      ></Route>
       <Route path={ROUTES.CREATE} element={<CreateCardPage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route

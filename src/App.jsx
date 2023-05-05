@@ -38,9 +38,9 @@ function App() {
   const isBiz = useBiz();
   // useLoggedIn()();
   useEffect(() => {
-    loggedIn();
     setAdmin(isAdmin());
     setBiz(isBiz());
+    loggedIn();
   }, []);
 
   /*
