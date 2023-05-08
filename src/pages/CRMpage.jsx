@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   Table,
+  Button,
   TableBody,
   TableCell,
   TableHead,
@@ -19,7 +22,6 @@ import axios from "axios";
 const CRMPage = () => {
   const dispatch = useDispatch();
   const [allUsers, setAllUsers] = useState(null);
-  //   const users = useSelector((state) => state.crm.users);
 
   useEffect(() => {
     axios
@@ -28,28 +30,43 @@ const CRMPage = () => {
         setAllUsers(response.data.users);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data);
       });
   }, []);
 
-  //   const handleAdminToggle = (event, user) => {
-  //     dispatch(updateUserAdminStatus(user.id, event.target.checked));
-  //   };
+  const handleUpdate = async (userId) => {
+    const user = allUsers.find((user) => user._id === userId);
+    try {
+      delete user._id;
+      delete user.isAdmin;
+      await axios.put(`/users/userInfo/${userId}`, user);
+      toast.success("user updated");
+    } catch (err) {
+      console.log("err", err);
+      toast.error("error");
+    }
+  };
 
-  //   const handleBizToggle = (event, user) => {
-  //     dispatch(updateUserBizStatus(user.id, event.target.checked));
-  //   };
+  const handleBizToggle = (event, user) => {
+    const checked = event.target.checked;
+    setAllUsers((prevUsers) =>
+      prevUsers.map((prevUser) =>
+        prevUser._id === user._id ? { ...prevUser, biz: checked } : prevUser
+      )
+    );
+  };
 
   if (!allUsers) {
     return <CircularProgress />;
   }
+
   return (
     <Table>
       <TableHead>
         <TableRow>
           <TableCell>Email</TableCell>
-          <TableCell>Admin</TableCell>
           <TableCell>Biz</TableCell>
+          <TableCell>Update</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -58,15 +75,18 @@ const CRMPage = () => {
             <TableCell>{user.email}</TableCell>
             <TableCell>
               <Checkbox
-                checked={user.isAdmin}
-                // onChange={(event) => handleAdminToggle(event, user)}
+                checked={user.biz}
+                onChange={(event) => handleBizToggle(event, user)}
               />
             </TableCell>
             <TableCell>
-              <Checkbox
-                checked={user.biz}
-                // onChange={(event) => handleBizToggle(event, user)}
-              />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleUpdate(user._id)}
+              >
+                Update
+              </Button>
             </TableCell>
           </TableRow>
         ))}
