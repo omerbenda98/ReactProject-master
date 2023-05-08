@@ -67,7 +67,6 @@ const EditCardPage = () => {
           return;
         }
         const { data } = await axios.get("/cards/card/" + id);
-        console.log();
         let newInputState = {
           ...data,
         };
@@ -98,9 +97,7 @@ const EditCardPage = () => {
   const handleSaveBtnClick = async (ev) => {
     try {
       const joiResponse = validateEditSchema(inputState);
-      console.log(inputState);
       setInputsErrorsState(joiResponse);
-      console.log(joiResponse);
       if (!joiResponse) {
         //move to homepage
         await axios.put("/cards/" + id, inputState);

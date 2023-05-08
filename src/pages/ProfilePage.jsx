@@ -89,7 +89,6 @@ const ProfilePage = () => {
     }));
   };
   const handleResetClick = (ev) => {
-    console.log("here");
     setInputState({
       firstName: "",
       middleName: "",

@@ -15,8 +15,6 @@ const MyCardsPage = () => {
 
   const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
   const isBiz = useSelector((bigPie) => bigPie.authSlice.isBiz);
-  console.log(isAdmin);
-  console.log(isBiz);
   useEffect(() => {
     axios
       .get("/cards/cards")

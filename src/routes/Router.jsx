@@ -19,6 +19,7 @@ import RP2 from "../pages/RP2";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import MoreInfoPage from "../pages/MoreInfoPage";
+import UserInfoPage from "../pages/UserInfoPage";
 
 //element={<ProtectedRoute element={<LogoutPage />} />}
 
@@ -38,6 +39,7 @@ const Router = () => {
     <Routes>
       <Route path={ROUTES.HOME} element={<HomePage />} />
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
+      <Route path={ROUTES.USERINFO} element={<UserInfoPage />} />
       <Route path={ROUTES.FAKEHOME} element={<Navigate to={ROUTES.HOME} />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
       <Route path="/moreInfo/:id" element={<MoreInfoPage />} />

@@ -11,6 +11,7 @@ const ROUTES = {
   FAVCARDS: "/favCards",
   SANDBOX: "/sandbox",
   CRM: "/crm",
+  USERINFO: "/userInfo",
 };
 
 export default ROUTES;
