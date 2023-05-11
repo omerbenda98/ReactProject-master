@@ -4,15 +4,18 @@ import { IconButton } from "@mui/material";
 import { Box, Grid } from "@mui/material";
 import CardComponent from "../components/CardComponent";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
 import { useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
+import ROUTES from "../routes/ROUTES";
 
 const MyCardsPage = () => {
   const [userData, setUserData] = useState(null);
   const [cardsArr, setCardsArr] = useState([]);
 
+  const navigate = useNavigate();
   const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
   const isBiz = useSelector((bigPie) => bigPie.authSlice.isBiz);
   useEffect(() => {
@@ -35,6 +38,9 @@ const MyCardsPage = () => {
       }
     })();
   }, []);
+  const handleNavigate = () => {
+    navigate(ROUTES.CREATE);
+  };
   const getTokenId = () => {
     const token = localStorage.getItem("token");
 
@@ -75,7 +81,7 @@ const MyCardsPage = () => {
         </Grid>
       </Box>
 
-      <IconButton>
+      <IconButton onClick={handleNavigate}>
         <AddCircleIcon
           color="success"
           sx={{

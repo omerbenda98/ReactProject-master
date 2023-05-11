@@ -78,6 +78,7 @@ const CRMPage = () => {
             <TableCell>Email</TableCell>
             <TableCell>Biz</TableCell>
             <TableCell>Update</TableCell>
+            <TableCell>See More</TableCell>
             <TableCell>Delete</TableCell>
           </TableRow>
         </TableHead>
@@ -204,7 +205,7 @@ const CRMPage = () => {
               <TableCell>
                 <Button
                   variant="contained"
-                  color="primary"
+                  color="warning"
                   onClick={() => handleUserInfo(user)}
                 >
                   See more
@@ -214,7 +215,7 @@ const CRMPage = () => {
                 {!user.isAdmin && (
                   <Button
                     variant="contained"
-                    color="primary"
+                    color="error"
                     onClick={() => handleDelete(user._id)}
                   >
                     Delete

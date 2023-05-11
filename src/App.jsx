@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "./App.css";
 import MuiNavbar from "./components/Navbar/MuiNavbar";
+import FooterComponent from "./components/FooterComponent";
 import Router from "./routes/Router";
 import { useSelector } from "react-redux";
 import useLoggedIn from "./hooks/useLoggedIn";
@@ -76,7 +77,9 @@ function App() {
         <main>
           <Router />
         </main>
-        <footer></footer>
+        <footer>
+          <FooterComponent />
+        </footer>
       </Container>
     </ThemeProvider>
   );

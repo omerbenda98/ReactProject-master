@@ -28,10 +28,6 @@ import "./MuiNavbar.css";
 // access to all
 const pages = [
   {
-    label: "Home",
-    url: ROUTES.HOME,
-  },
-  {
     label: "About",
     url: ROUTES.ABOUT,
   },
