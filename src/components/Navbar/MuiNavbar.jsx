@@ -8,10 +8,8 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import DiamondIcon from "@mui/icons-material/Diamond";
-import Link from "@mui/icons-material/Link";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Switch } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -23,12 +21,10 @@ import { darkThemeActions } from "../../store/darkTheme";
 import NavLinkComponent from "./NavLinkComponent";
 import { authActions } from "../../store/auth";
 
-import "./MuiNavbar.css";
-
 // access to all
 const pages = [
   {
-    label: "About",
+    label: "ABOUT",
     url: ROUTES.ABOUT,
   },
 ];
@@ -87,7 +83,6 @@ const MuiNavbar = () => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const dispatch = useDispatch();
-  // dispatch(authActions.isAdmin());
   const isDarkTheme = useSelector(
     (bigPie) => bigPie.darkThemeSlice.isDarkTheme
   );
@@ -127,7 +122,12 @@ const MuiNavbar = () => {
             LOGO
           </Typography>
           {/* main navbar */}
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+            }}
+          >
             {pages.map((page) => (
               <NavLinkComponent key={page.url} {...page} />
             ))}
@@ -142,28 +142,29 @@ const MuiNavbar = () => {
                 ))
               : ""}
           </Box>
-          {isLoggedIn
-            ? authedPages.map((page) =>
-                page.url === ROUTES.LOGOUT ? (
-                  <NavLinkComponent
-                    key={page.url}
-                    {...page}
-                    onClick={logoutClick}
-                  />
-                ) : (
-                  <NavLinkComponent key={page.url} {...page} />
+          <Box sx={{ display: { xs: "none", md: "flex", lg: "flex" } }}>
+            {" "}
+            <SearchPartial sx={{ mt: { lg: 3 } }} />
+          </Box>
+          <Box sx={{ display: { xs: "none", md: "flex", lg: "flex" } }}>
+            {isLoggedIn
+              ? authedPages.map((page) =>
+                  page.url === ROUTES.LOGOUT ? (
+                    <NavLinkComponent
+                      key={page.url}
+                      {...page}
+                      onClick={logoutClick}
+                    />
+                  ) : (
+                    <NavLinkComponent key={page.url} {...page} />
+                  )
                 )
-              )
-            : notAuthPages.map((page) => (
-                <NavLinkComponent key={page.url} {...page} />
-              ))}
-          <SearchPartial />
-          <Box
-            sx={{
-              my: 2,
-              p: 1,
-            }}
-          >
+              : notAuthPages.map((page) => (
+                  <NavLinkComponent key={page.url} {...page} />
+                ))}
+          </Box>
+
+          <Box sx={{ my: 2, p: 1 }}>
             <Typography sx={{ display: { xs: "none", md: "inline" } }}>
               {isDarkTheme ? (
                 <DarkModeIcon
@@ -220,23 +221,109 @@ const MuiNavbar = () => {
               {pages.map((page) => (
                 <MenuItem
                   key={"miniLinks" + page.url}
+                  component={NavLink}
+                  to={page.url}
                   onClick={handleCloseNavMenu}
                 >
-                  <NavLink to={page.url}>
-                    {/* if the current page and the link is the same then it will change the color of the link */}
-                    {({ isActive }) => (
+                  <Typography
+                    sx={{
+                      textAlign: "center",
+                      color: "inherit",
+                    }}
+                  >
+                    {page.label}
+                  </Typography>
+                </MenuItem>
+              ))}
+              {isBiz &&
+                bizPages.map((page) => (
+                  <MenuItem
+                    key={"miniLinks" + page.url}
+                    component={NavLink}
+                    to={page.url}
+                    onClick={handleCloseNavMenu}
+                  >
+                    <Typography
+                      sx={{
+                        textAlign: "center",
+                        color: "inherit",
+                      }}
+                    >
+                      {page.label}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              {isAdmin &&
+                adminPages.map((page) => (
+                  <MenuItem
+                    key={"miniLinks" + page.url}
+                    component={NavLink}
+                    to={page.url}
+                    onClick={handleCloseNavMenu}
+                  >
+                    <Typography
+                      sx={{
+                        textAlign: "center",
+                        color: "inherit",
+                      }}
+                    >
+                      {page.label}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              {isLoggedIn
+                ? authedPages.map((page) =>
+                    page.url === ROUTES.LOGOUT ? (
+                      <MenuItem
+                        key={"miniLinks" + page.url}
+                        component={NavLink}
+                        to={page.url}
+                        onClick={logoutClick}
+                      >
+                        <Typography
+                          sx={{
+                            textAlign: "center",
+                            color: "inherit",
+                          }}
+                        >
+                          {page.label}
+                        </Typography>
+                      </MenuItem>
+                    ) : (
+                      <MenuItem
+                        key={"miniLinks" + page.url}
+                        component={NavLink}
+                        to={page.url}
+                        onClick={handleCloseNavMenu}
+                      >
+                        <Typography
+                          sx={{
+                            textAlign: "center",
+                            color: "inherit",
+                          }}
+                        >
+                          {page.label}
+                        </Typography>
+                      </MenuItem>
+                    )
+                  )
+                : notAuthPages.map((page) => (
+                    <MenuItem
+                      key={"miniLinks" + page.url}
+                      component={NavLink}
+                      to={page.url}
+                      onClick={handleCloseNavMenu}
+                    >
                       <Typography
                         sx={{
                           textAlign: "center",
-                          color: `${isActive ? "red" : ""}`,
+                          color: "inherit",
                         }}
                       >
                         {page.label}
                       </Typography>
-                    )}
-                  </NavLink>
-                </MenuItem>
-              ))}
+                    </MenuItem>
+                  ))}
             </Menu>
           </Box>
         </Toolbar>

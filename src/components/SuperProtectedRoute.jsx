@@ -7,7 +7,6 @@ import { CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 
 const SuperProtectedRoute = ({ element, isAdmin, isBiz }) => {
-  //* logic section
   const isLoggedIn = useSelector((bigState) => bigState.authSlice.isLoggedIn);
   const admin = useSelector((bigState) => bigState.authSlice.isAdmin);
   const payload = useSelector((bigState) => bigState.authSlice.payload);
@@ -17,7 +16,6 @@ const SuperProtectedRoute = ({ element, isAdmin, isBiz }) => {
     setIsLoading(false);
   }, [biz, admin]);
 
-  //* html section
   if (isLoading) {
     return <CircularProgress />;
   }

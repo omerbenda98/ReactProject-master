@@ -5,7 +5,6 @@ import {
   Button,
   TableBody,
   TableCell,
-  TableHead,
   TableRow,
   Checkbox,
   CircularProgress,
@@ -72,22 +71,10 @@ const CRMPage = () => {
 
   return (
     <Table>
-      {!selectedUser && (
-        <TableHead>
-          <TableRow>
-            <TableCell>Email</TableCell>
-            <TableCell>Biz</TableCell>
-            <TableCell>Update</TableCell>
-            <TableCell>See More</TableCell>
-            <TableCell>Delete</TableCell>
-          </TableRow>
-        </TableHead>
-      )}
       <TableBody>
         {selectedUser ? (
           <TableRow>
             <TableCell colSpan={4}>
-              {/* render read-only display of user information */}
               <Box
                 sx={{
                   marginTop: 8,
@@ -193,29 +180,47 @@ const CRMPage = () => {
                   onChange={(event) => handleBizToggle(event, user)}
                 />
               </TableCell>
-              <TableCell>
+
+              <TableCell
+                sx={{
+                  display: { xs: "block", md: "flex", lg: "flex" },
+                  width: { xs: "50%", md: "70%", lg: "100%" },
+                }}
+              >
                 <Button
                   variant="contained"
                   color="primary"
+                  sx={{
+                    width: { xs: "100%", md: "", lg: "20%" },
+                    mb: { xs: 1, md: 0, lg: 0 },
+                    mr: 8,
+                  }}
                   onClick={() => handleUpdate(user._id)}
                 >
                   Update
                 </Button>
-              </TableCell>
-              <TableCell>
+
                 <Button
                   variant="contained"
                   color="warning"
+                  sx={{
+                    width: { xs: "100%", md: "", lg: "20%" },
+                    mb: { xs: 1, md: 0, lg: 0 },
+                    mr: 8,
+                  }}
                   onClick={() => handleUserInfo(user)}
                 >
                   See more
                 </Button>
-              </TableCell>
-              <TableCell>
+
                 {!user.isAdmin && (
                   <Button
                     variant="contained"
                     color="error"
+                    sx={{
+                      width: { xs: "100%", md: "", lg: "20%" },
+                      mb: { xs: 0, md: 0, lg: 0 },
+                    }}
                     onClick={() => handleDelete(user._id)}
                   >
                     Delete

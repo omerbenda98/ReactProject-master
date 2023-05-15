@@ -80,7 +80,14 @@ const HomePage = () => {
 
       <Grid container spacing={2}>
         {cardsArr.map((item) => (
-          <Grid item xs={4} key={item._id + Date.now()}>
+          <Grid
+            item
+            xs={10}
+            md={6}
+            lg={4}
+            sx={{ ml: { xs: 4, lg: 0, md: 0 } }}
+            key={item._id + Date.now()}
+          >
             <CardComponent
               id={item._id}
               title={item.title}

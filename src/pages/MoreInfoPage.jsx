@@ -18,7 +18,6 @@ const MoreInfoPage = () => {
       try {
         const { data } = await axios.get("/cards/card/" + id);
         setCardInfo(data);
-        // use the received data here
       } catch (err) {
         console.log("err from axios", err);
       }

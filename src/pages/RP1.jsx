@@ -1,5 +1,4 @@
 import { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { counterActions } from "../store/counter";

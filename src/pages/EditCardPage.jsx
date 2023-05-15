@@ -21,48 +21,17 @@ import { toast } from "react-toastify";
 
 const EditCardPage = () => {
   const { id } = useParams();
-  /*
-    router: /edit/:id
-    url: /edit/magafaiim
-    params = {
-      id: "magafaiim"
-    }
-    const params = useParams()
-    const id = params.id
-  */
+
   const [inputState, setInputState] = useState(null);
   const [isDisabled, setIsDisabled] = useState(false);
-  // const [inputState, setInputState] = useState({
-  //   title: "",
-  //   subTitle: "",
-  //   description: "",
-  //   state: "",
-  //   country: "",
-  //   city: "",
-  //   street: "",
-  //   houseNumber: "",
-  //   zipCode: "",
-  //   phone: "",
-  //   email: "",
-  //   web: "",
-  //   url: "",
-  //   alt: "",
-  // });
   const [inputsErrorsState, setInputsErrorsState] = useState({});
   const navigate = useNavigate();
-  /*
-    const params = useParams();
-    params = {
-      id:1
-    }
-    const id = params.id
-  */
+
   useEffect(() => {
     (async () => {
       try {
         const errors = validateEditCardParamsSchema({ id });
         if (errors) {
-          // there was errors = incorrect id
           navigate("/");
           return;
         }
@@ -99,7 +68,6 @@ const EditCardPage = () => {
       const joiResponse = validateEditSchema(inputState);
       setInputsErrorsState(joiResponse);
       if (!joiResponse) {
-        //move to homepage
         await axios.put("/cards/" + id, inputState);
         navigate(ROUTES.HOME);
       }
@@ -110,9 +78,9 @@ const EditCardPage = () => {
   };
 
   const handleCancelBtnClick = (ev) => {
-    //move to homepage
     navigate(ROUTES.HOME);
   };
+
   const handleInputChange = (ev) => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState[ev.target.id] = ev.target.value;

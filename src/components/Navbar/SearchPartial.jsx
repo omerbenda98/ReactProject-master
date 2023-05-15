@@ -34,7 +34,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -51,7 +50,6 @@ const SearchPartial = () => {
   const [searchInput, setSearchInput] = useState("");
   const navigate = useNavigate();
   const handleSearchChange = (e) => {
-    // console.log(e.target.value);
     setSearchInput(e.target.value);
   };
   const handleSearchSubmit = (e) => {

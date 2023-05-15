@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import { Fragment, useState, useEffect, useMemo } from "react";
+import { Fragment, useState, useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -36,7 +36,6 @@ const CardComponent = ({
   const [myCardsArr, setCardsArr] = useState(cardsArr);
 
   const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
-  // const isCardFav = isFavorite(id);
   const navigate = useNavigate();
 
   const bizAdminCardLayout = () => {
@@ -60,7 +59,7 @@ const CardComponent = ({
   };
   const handleDeleteBtnClick = async (id) => {
     try {
-      await axios.delete("/cards/" + id); // /cards/:id
+      await axios.delete("/cards/" + id);
 
       setCardsArr((newCardsArr) =>
         newCardsArr.filter((item) => item._id !== id)
@@ -70,7 +69,7 @@ const CardComponent = ({
     }
   };
   const handleEditBtnClick = () => {
-    navigate(`/edit/${id}`); //localhost:3000/edit/123213
+    navigate(`/edit/${id}`);
   };
   const handleMoreInfoClick = () => {
     navigate(`/moreInfo/${id}`);
@@ -102,25 +101,11 @@ const CardComponent = ({
       toast.error("Error, can not remove card");
     }
   };
-  // const isFavorite = (id) => {
-  //   const isCardFav = cardsArr.some((card) => card._id === id);
-  //   return isCardFav;
-  // };
 
   useEffect(() => {
     setIsFav(isFavorite());
   }, []);
 
-  // try {
-  //   const response = await axios.patch(`cards/card-like/${id}`, {
-  //     cardData: newFavoriteCard,
-  //   });
-
-  // } catch (err) {
-  //   console.log("err", err);
-  //   toast.error("errrrrrrrrrrrrrrrror");
-  // }
-  // };
   return (
     <Card square raised>
       <CardActionArea>

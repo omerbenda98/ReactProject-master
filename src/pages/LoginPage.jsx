@@ -23,11 +23,13 @@ const LoginPage = () => {
     password: "",
   });
   const [inputsErrorsState, setInputsErrorsState] = useState(null);
+
   const loggedIn = useLoggedIn();
   const isAdmin = useAdmin();
   const isBiz = useBiz();
   const navigate = useNavigate();
   const [isDisabled, setIsDisabled] = useState(true);
+
   const handleBtnClick = async (ev) => {
     try {
       const joiResponse = validateLoginSchema(inputState);
@@ -35,17 +37,19 @@ const LoginPage = () => {
       if (joiResponse) {
         return;
       }
+
       const { data } = await axios.post("/users/login", inputState);
       localStorage.setItem("token", data.token);
       loggedIn();
       isAdmin();
       isBiz();
-      //move to homepage
+
       navigate(ROUTES.HOME);
     } catch (err) {
-      console.log("login error", err);
+      console.log("Login error", err);
     }
   };
+
   const handleInputChange = (ev) => {
     let newInputState = JSON.parse(JSON.stringify(inputState));
     newInputState[ev.target.id] = ev.target.value;
@@ -59,6 +63,7 @@ const LoginPage = () => {
       setIsDisabled(true);
     }
   };
+
   const handleResetClick = (ev) => {
     setInputState({
       email: "",
@@ -66,6 +71,7 @@ const LoginPage = () => {
     });
     setInputsErrorsState(null);
   };
+
   return (
     <Container component="main" maxWidth="xs">
       <Box

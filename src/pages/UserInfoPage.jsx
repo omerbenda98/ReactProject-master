@@ -6,8 +6,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useLocation } from "react-router-dom";
 
-import { useNavigate } from "react-router-dom";
-
 const UserInfoPage = () => {
   const [user, setUser] = useState(null);
   const location = useLocation();
@@ -22,7 +20,11 @@ const UserInfoPage = () => {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      maxWidth="xs"
+      sx={{ display: "flex", textAlign: "center" }}
+    >
       // render read-only display of user information
       <Box
         sx={{

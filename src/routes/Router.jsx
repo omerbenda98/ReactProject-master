@@ -16,25 +16,10 @@ import CreateCardPage from "../pages/CreateCardPage";
 import CRMpage from "../pages/CRMpage";
 import RP1 from "../pages/RP1";
 import RP2 from "../pages/RP2";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import MoreInfoPage from "../pages/MoreInfoPage";
 import UserInfoPage from "../pages/UserInfoPage";
 
-//element={<ProtectedRoute element={<LogoutPage />} />}
-
 const Router = () => {
-  // const [allCards, setAllCards] = useState([]);
-  // useEffect(() => {
-  //   axios
-  //     .get("/cards/cards")
-  //     .then((response) => {
-  //       setAllCards(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
   return (
     <Routes>
       <Route path={ROUTES.HOME} element={<HomePage />} />

@@ -49,10 +49,20 @@ const FavCardsPage = () => {
 
   return (
     <Box>
+      <Typography variant="h3" sx={{ textAlign: "center" }}>
+        Your Favorite Cards!
+      </Typography>
       {favoriteCardsArr.length != 0 ? (
         <Grid container spacing={2}>
           {favoriteCardsArr.map((item) => (
-            <Grid item xs={4} key={item._id + Date.now()}>
+            <Grid
+              item
+              xs={10}
+              md={6}
+              lg={4}
+              sx={{ ml: { xs: 4, md: 0, lg: 0 } }}
+              key={item._id + Date.now()}
+            >
               <CardComponent
                 id={item._id}
                 title={item.title}

@@ -8,7 +8,7 @@ const NavLinkComponent = ({ url, label, onClick }) => {
           sx={{
             my: 2,
             display: "block",
-            p: 2,
+            p: 1,
           }}
           color={isActive ? "warning.text" : "text.primary"}
         >

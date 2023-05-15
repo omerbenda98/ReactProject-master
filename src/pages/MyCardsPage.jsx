@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { IconButton } from "@mui/material";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import CardComponent from "../components/CardComponent";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -60,11 +60,20 @@ const MyCardsPage = () => {
 
   return (
     <Fragment>
-      <h1>My Cards</h1>
+      <Typography variant="h3" sx={{ textAlign: "center" }}>
+        My Cards
+      </Typography>
       <Box>
         <Grid container spacing={2}>
           {userData.map((item) => (
-            <Grid item xs={4} key={item._id + Date.now()}>
+            <Grid
+              item
+              xs={10}
+              md={6}
+              lg={4}
+              sx={{ ml: { xs: 4, lg: 0, md: 0 } }}
+              key={item._id + Date.now()}
+            >
               <CardComponent
                 id={item._id}
                 title={item.title}

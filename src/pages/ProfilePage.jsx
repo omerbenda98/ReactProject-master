@@ -7,7 +7,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
@@ -109,7 +109,7 @@ const ProfilePage = () => {
     setInputsErrorsState(null);
   };
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" sx={{ mt: 5 }}>
       {editMode ? (
         <>
           <Grid container spacing={3}>
@@ -404,7 +404,6 @@ const ProfilePage = () => {
           </Grid>
         </>
       ) : (
-        // render read-only display of user information
         <Box
           sx={{
             marginTop: 8,
@@ -414,7 +413,7 @@ const ProfilePage = () => {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+            <AccountCircleIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Profile
