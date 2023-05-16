@@ -173,33 +173,32 @@ const CRMPage = () => {
         ) : (
           allUsers.map((user) => (
             <TableRow key={user._id}>
-              <TableCell>{user.email}</TableCell>
               <TableCell>
-                <Checkbox
-                  checked={user.biz}
-                  onChange={(event) => handleBizToggle(event, user)}
-                />
+                {user.firstName} {user.lastName}
+              </TableCell>
+
+              <TableCell>
+                {!user.isAdmin && (
+                  <Typography sx={{ ml: { lg: 6 } }}>
+                    is user a business client:{" "}
+                    {!user.isAdmin && (
+                      <Checkbox
+                        checked={user.biz}
+                        onChange={(event) => handleBizToggle(event, user)}
+                        sx={{ ml: { lg: 0 } }}
+                      />
+                    )}
+                  </Typography>
+                )}
               </TableCell>
 
               <TableCell
                 sx={{
                   display: { xs: "block", md: "flex", lg: "flex" },
-                  width: { xs: "50%", md: "70%", lg: "100%" },
+                  width: { xs: "100%", md: "70%", lg: "100%" },
+                  height: { lg: "5rem" },
                 }}
               >
-                <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{
-                    width: { xs: "100%", md: "", lg: "20%" },
-                    mb: { xs: 1, md: 0, lg: 0 },
-                    mr: 8,
-                  }}
-                  onClick={() => handleUpdate(user._id)}
-                >
-                  Update
-                </Button>
-
                 <Button
                   variant="contained"
                   color="warning"
@@ -212,6 +211,20 @@ const CRMPage = () => {
                 >
                   See more
                 </Button>
+                {!user.isAdmin && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    sx={{
+                      width: { xs: "100%", md: "", lg: "20%" },
+                      mb: { xs: 1, md: 0, lg: 0 },
+                      mr: 8,
+                    }}
+                    onClick={() => handleUpdate(user._id)}
+                  >
+                    Update
+                  </Button>
+                )}
 
                 {!user.isAdmin && (
                   <Button

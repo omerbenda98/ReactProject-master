@@ -385,18 +385,19 @@ const CreateCardPage = () => {
               )}
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Button
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                color="success"
                 onClick={handleSaveBtnClick}
                 disabled={isDisabled}
               >
                 Save
               </Button>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Button
                 fullWidth
                 variant="contained"
@@ -406,10 +407,11 @@ const CreateCardPage = () => {
                 reset
               </Button>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Button
                 fullWidth
                 variant="contained"
+                color="error"
                 sx={{ mt: 3, mb: 2 }}
                 onClick={handleCancelBtnClick}
               >

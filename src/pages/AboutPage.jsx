@@ -16,7 +16,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import atom from "../logo.svg";
 const AboutUsPage = () => {
   const exampleCard = {
-    img: atom,
+    img: "https://images.unsplash.com/photo-1682001426601-c7fdc9ea5b4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=60",
     title: "Example Card",
     subTitle: "Subtitle",
     description:
@@ -84,10 +84,10 @@ const AboutUsPage = () => {
         <Typography variant="h5" gutterBottom>
           Example Card
         </Typography>
-        <Card sx={{ maxWidth: 710 }}>
+        <Card sx={{ maxWidth: 710, ml: 10 }}>
           <CardMedia
             component="img"
-            height="140"
+            height="340"
             image={exampleCard.img}
             alt="Example Card"
           />

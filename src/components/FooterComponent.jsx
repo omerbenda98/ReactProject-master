@@ -9,10 +9,7 @@ const FooterComponent = () => {
   return (
     <Box sx={{ bgcolor: theme.palette.background.paper, py: 4 }}>
       <Typography variant="body2" align="center" color="text.secondary">
-        &copy; {new Date().getFullYear()} Your Website. All rights reserved.
-      </Typography>
-      <Typography variant="body2" align="center" color="text.secondary">
-        Additional information or links can be placed here.
+        &copy; {new Date().getFullYear()} Omer Ben David. All rights reserved.
       </Typography>
     </Box>
   );

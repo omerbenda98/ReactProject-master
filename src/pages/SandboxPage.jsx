@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import RP1 from "./RP1";
 import RP2 from "./RP2";
 
@@ -14,6 +14,9 @@ const SandboxPage = () => {
   return (
     <>
       <div>
+        <Typography variant="h3" sx={{ textAlign: "center" }}>
+          Sandbox Page
+        </Typography>
         <Button
           variant="contained"
           color="primary"

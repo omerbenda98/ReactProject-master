@@ -410,6 +410,7 @@ const RegisterPage = () => {
           <Button
             fullWidth
             variant="contained"
+            color="success"
             sx={{ mt: 3, mb: 2 }}
             onClick={handleBtnClick}
             disabled={isDisabled}
@@ -427,6 +428,7 @@ const RegisterPage = () => {
           <Button
             fullWidth
             variant="contained"
+            color="error"
             sx={{ mt: 3, mb: 2 }}
             onClick={handleCancelBtnClick}
           >

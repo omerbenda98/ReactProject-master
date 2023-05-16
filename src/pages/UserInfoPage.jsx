@@ -25,7 +25,6 @@ const UserInfoPage = () => {
       maxWidth="xs"
       sx={{ display: "flex", textAlign: "center" }}
     >
-      // render read-only display of user information
       <Box
         sx={{
           marginTop: 8,

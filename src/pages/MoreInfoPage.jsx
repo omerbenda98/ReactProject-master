@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Box, Card, CardContent, Typography, IconButton } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  IconButton,
+  Divider,
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -34,7 +41,18 @@ const MoreInfoPage = () => {
       <Card sx={{ width: "50%", maxWidth: "700px", textAlign: "center" }}>
         <CardContent>
           <Typography variant="h4" component="h2" sx={{ mb: "1rem" }}>
-            {cardInfo.title}
+            {cardInfo.title}{" "}
+            <a
+              href={cardInfo.image.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src={cardInfo.image.url}
+                alt={cardInfo.image.alt}
+                sx={{ width: "100%" }}
+              />
+            </a>
           </Typography>
           <Typography
             color="textSecondary"
@@ -47,6 +65,10 @@ const MoreInfoPage = () => {
           </Typography>
           <Typography variant="body1" component="p" sx={{ mb: "2rem" }}>
             {cardInfo.description}
+          </Typography>
+          <Divider></Divider>
+          <Typography variant="body1" component="p" sx={{ mt: 3 }}>
+            for more info
           </Typography>
           <IconButton
             onClick={handleExpandClick}
@@ -76,17 +98,6 @@ const MoreInfoPage = () => {
             <Typography variant="body1" component="p" sx={{ mb: "1rem" }}>
               {`Web: ${cardInfo.web}`}
             </Typography>
-            <a
-              href={cardInfo.image.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src={cardInfo.image.url}
-                alt={cardInfo.image.alt}
-                sx={{ width: "100%" }}
-              />
-            </a>
           </CardContent>
         )}
       </Card>

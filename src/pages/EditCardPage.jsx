@@ -69,6 +69,7 @@ const EditCardPage = () => {
       setInputsErrorsState(joiResponse);
       if (!joiResponse) {
         await axios.put("/cards/" + id, inputState);
+        toast.success("Card Edited Successfully");
         navigate(ROUTES.HOME);
       }
     } catch (err) {
@@ -408,9 +409,9 @@ const EditCardPage = () => {
               )}
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Button
-                fullWidth
+                color="success"
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 onClick={handleSaveBtnClick}
@@ -419,22 +420,23 @@ const EditCardPage = () => {
                 Save
               </Button>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <Button
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                onClick={handleCancelBtnClick}
-              >
-                Cancel
-              </Button>
-              <Button
-                fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 onClick={handleResetClick}
               >
                 Reset
+              </Button>
+            </Grid>
+            <Grid item xs={4}>
+              <Button
+                color="error"
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={handleCancelBtnClick}
+              >
+                Cancel
               </Button>
             </Grid>
           </Grid>
