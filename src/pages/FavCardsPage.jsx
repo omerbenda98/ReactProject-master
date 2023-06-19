@@ -32,7 +32,9 @@ const FavCardsPage = () => {
         console.log(error);
       });
   }, []);
-
+  const onDelete = (id) => {
+    setCardsArr((newCardsArr) => newCardsArr.filter((item) => item._id !== id));
+  };
   const getTokenId = () => {
     const token = localStorage.getItem("token");
 
@@ -74,6 +76,7 @@ const FavCardsPage = () => {
                 tokenId={getTokenId()}
                 cardsArr={cardsArr}
                 onFavoriteDelete={handleRemoveCard}
+                onDelete={onDelete}
               />
             </Grid>
           ))}

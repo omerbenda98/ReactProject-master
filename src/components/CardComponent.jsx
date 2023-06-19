@@ -30,6 +30,7 @@ const CardComponent = ({
   cardsArr,
   tokenId,
   userId,
+  onDelete,
   onFavoriteDelete,
 }) => {
   const [isFav, setIsFav] = useState(false);
@@ -57,22 +58,22 @@ const CardComponent = ({
       return false;
     }
   };
-  const handleDeleteBtnClick = async (id) => {
-    try {
-      await axios.delete("/cards/" + id);
 
-      setCardsArr((newCardsArr) =>
-        newCardsArr.filter((item) => item._id !== id)
-      );
-    } catch (err) {
-      console.log("error when deleting", err.response.data);
-    }
-  };
   const handleEditBtnClick = () => {
     navigate(`/edit/${id}`);
   };
   const handleMoreInfoClick = () => {
     navigate(`/moreInfo/${id}`);
+  };
+  const handleDeleteBtnClick = async (id) => {
+    try {
+      await axios.delete("/cards/" + id);
+      onDelete(id);
+      toast.success("Card Deleted");
+    } catch (err) {
+      toast.error("Error, can delete card");
+      console.log("error when deleting", err.response.data);
+    }
   };
   const handleFavoriteBtnClick = async () => {
     setIsFav(true);
@@ -94,6 +95,7 @@ const CardComponent = ({
       const updatedLikes = newFavoriteCard.likes.filter(
         (like) => like !== userId
       );
+
       await axios.patch(`cards/card-like/${id}`, { likes: updatedLikes });
       toast.success("Card removed from favorites");
     } catch (error) {
@@ -137,7 +139,7 @@ const CardComponent = ({
 
         {(bizAdminCardLayout() || isAdmin) && (
           <Tooltip title="Delete">
-            <IconButton onClick={handleDeleteBtnClick}>
+            <IconButton onClick={() => handleDeleteBtnClick(id)}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>

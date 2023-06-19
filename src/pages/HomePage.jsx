@@ -17,6 +17,9 @@ const HomePage = () => {
   let qparams = useQueryParams();
   const isBiz = useSelector((bigPie) => bigPie.authSlice.isBiz);
   const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
+  const onDelete = (id) => {
+    setCardsArr((newCardsArr) => newCardsArr.filter((item) => item._id !== id));
+  };
 
   useEffect(() => {
     axios
@@ -99,6 +102,7 @@ const HomePage = () => {
               userId={item.user_id}
               tokenId={getTokenId()}
               onClick={() => setSelectedCard(item)}
+              onDelete={onDelete}
             />
           </Grid>
         ))}

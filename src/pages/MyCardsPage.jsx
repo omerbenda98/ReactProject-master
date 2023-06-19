@@ -18,6 +18,7 @@ const MyCardsPage = () => {
   const navigate = useNavigate();
   const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
   const isBiz = useSelector((bigPie) => bigPie.authSlice.isBiz);
+
   useEffect(() => {
     axios
       .get("/cards/cards")
@@ -38,6 +39,9 @@ const MyCardsPage = () => {
       }
     })();
   }, []);
+  const onDelete = (id) => {
+    setCardsArr((newCardsArr) => newCardsArr.filter((item) => item._id !== id));
+  };
   const handleNavigate = () => {
     navigate(ROUTES.CREATE);
   };
@@ -84,6 +88,7 @@ const MyCardsPage = () => {
                 isAdmin={isAdmin}
                 userId={item.user_id}
                 tokenId={getTokenId()}
+                onDelete={onDelete}
               />
             </Grid>
           ))}
