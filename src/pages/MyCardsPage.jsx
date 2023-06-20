@@ -14,6 +14,7 @@ import ROUTES from "../routes/ROUTES";
 const MyCardsPage = () => {
   const [userData, setUserData] = useState(null);
   const [cardsArr, setCardsArr] = useState([]);
+  const [isDataEmpty, setIsDataEmpty] = useState(false);
 
   const navigate = useNavigate();
   const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
@@ -34,6 +35,7 @@ const MyCardsPage = () => {
       try {
         const { data } = await axios.get("cards/my-cards");
         setUserData(data);
+        setIsDataEmpty(true);
       } catch (err) {
         console.log("error from axios", err);
       }
@@ -67,34 +69,39 @@ const MyCardsPage = () => {
       <Typography variant="h3" sx={{ textAlign: "center" }}>
         My Cards
       </Typography>
-      <Box>
-        <Grid container spacing={2}>
-          {userData.map((item) => (
-            <Grid
-              item
-              xs={10}
-              md={6}
-              lg={4}
-              sx={{ ml: { xs: 4, lg: 0, md: 0 } }}
-              key={item._id + Date.now()}
-            >
-              <CardComponent
-                id={item._id}
-                title={item.title}
-                subTitle={item.subTitle}
-                description={item.description}
-                img={item.image ? item.image.url : ""}
-                cardsArr={cardsArr}
-                isAdmin={isAdmin}
-                userId={item.user_id}
-                tokenId={getTokenId()}
-                onDelete={onDelete}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-
+      {isDataEmpty === true ? (
+        <Typography variant="h5" sx={{ textAlign: "center" }}>
+          No cards created. Click add button below to add cards.
+        </Typography>
+      ) : (
+        <Box>
+          <Grid container spacing={2}>
+            {userData.map((item) => (
+              <Grid
+                item
+                xs={10}
+                md={6}
+                lg={4}
+                sx={{ ml: { xs: 4, lg: 0, md: 0 } }}
+                key={item._id + Date.now()}
+              >
+                <CardComponent
+                  id={item._id}
+                  title={item.title}
+                  subTitle={item.subTitle}
+                  description={item.description}
+                  img={item.image ? item.image.url : ""}
+                  cardsArr={cardsArr}
+                  isAdmin={isAdmin}
+                  userId={item.user_id}
+                  tokenId={getTokenId()}
+                  onDelete={onDelete}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      )}
       <IconButton onClick={handleNavigate}>
         <AddCircleIcon
           color="success"
